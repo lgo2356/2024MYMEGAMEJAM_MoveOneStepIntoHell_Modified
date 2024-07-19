@@ -1224,6 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b809d84313386bd4bb68e53d058ee85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_UIRoot: {fileID: 1530560237}
   bgmClip: {fileID: 8300000, guid: 148b9b2f6a144b94da65b1372e702494, type: 3}
   clickSound: {fileID: 8300000, guid: 0142457442d22e2439f094d047f932ba, type: 3}
   startButton: {fileID: 1197266085}

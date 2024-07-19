@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TeamJustFour.MoveOneStep.Module;
+using TeamJustFour.MoveOneStep.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,7 @@ namespace TeamJustFour.MoveOneStep.Manager
 {
     public class StageSceneGameManager : Singleton<StageSceneGameManager>
     {
-        public int CurrentStage { get; set; } = 0;
+        [SerializeField] private UI_StageSceneRoot m_UIRoot;
 
         public AudioClip bgmClip; // 스테이지 선택 씬의 BGM으로 사용할 오디오 클립
         public AudioClip clickSound; // 마우스 클릭 시 재생할 오디오 클립
@@ -20,7 +19,25 @@ namespace TeamJustFour.MoveOneStep.Manager
         private float developmentBgmVolume = 0.1f; // 개발 중에만 사용할 BGM 볼륨 (0.0f ~ 1.0f)
         private float clickSoundVolume = 0.1f; // 마우스 클릭 사운드 볼륨
 
-        void Start()
+        private void OnStartButtonClick()
+        {
+            // BGM 중단
+            if (bgmSource.isPlaying)
+            {
+                bgmSource.Stop();
+            }
+
+            // 추가로 Start 버튼 클릭 시 수행할 작업을 여기에 추가
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            RemoveDontDestroyOnLoad();
+        }
+
+        private void Start()
         {
             // BGM AudioSource 설정 및 재생
             bgmSource = gameObject.AddComponent<AudioSource>();
@@ -39,7 +56,21 @@ namespace TeamJustFour.MoveOneStep.Manager
             }
         }
 
-        void Update()
+        private void OnEnable()
+        {
+            Debug.Log("StageSceneGameManager is enabled.");
+
+            m_UIRoot.ShowGuidePopup();
+        }
+
+        private void OnDisable()
+        {
+            Debug.Log("StageSceneGameManager is disabled.");
+
+            m_UIRoot.HideGuidePopup();
+        }
+
+        private void Update()
         {
             // 마우스 클릭 입력 감지
             if (Input.GetMouseButtonDown(0)) // 왼쪽 마우스 버튼 클릭
@@ -50,17 +81,6 @@ namespace TeamJustFour.MoveOneStep.Manager
                     soundSource.PlayOneShot(clickSound, clickSoundVolume);
                 }
             }
-        }
-
-        private void OnStartButtonClick()
-        {
-            // BGM 중단
-            if (bgmSource.isPlaying)
-            {
-                bgmSource.Stop();
-            }
-
-            // 추가로 Start 버튼 클릭 시 수행할 작업을 여기에 추가
         }
     }
 }

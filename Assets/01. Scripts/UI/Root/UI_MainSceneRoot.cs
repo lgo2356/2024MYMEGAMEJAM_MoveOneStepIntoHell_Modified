@@ -36,9 +36,12 @@ namespace TeamJustFour.MoveOneStep.UI
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyInput);
         }
 
-        private void OnDestroy()
-        {
-            KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyInput);
-        }
+        //private void OnDestroy()
+        //{
+        //    if (Application.isPlaying)
+        //    {
+        //        KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyInput);
+        //    }
+        //}
     }
 }

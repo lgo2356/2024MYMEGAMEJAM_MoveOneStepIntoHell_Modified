@@ -22,6 +22,13 @@ namespace TeamJustFour.MoveOneStep.Module
         private float enterSoundVolume = 0.6f; // 엔터 키 입력 사운드 볼륨
         private float clickSoundVolume = 0.6f; // 마우스 클릭 사운드 볼륨
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            RemoveDontDestroyOnLoad();
+        }
+
         void Start()
         {
             // MainCamera에서 AudioSource 컴포넌트를 찾아 가져옴

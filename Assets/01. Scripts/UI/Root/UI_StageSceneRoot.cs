@@ -15,6 +15,16 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public int CurrentStage = 0;
 
+        public void ShowGuidePopup()
+        {
+            m_GuidePopup.gameObject.SetActive(true);
+        }
+
+        public void HideGuidePopup()
+        {
+            m_GuidePopup.gameObject.SetActive(false);
+        }
+
         public void OnLeftButtonClick()
         {
             if (!m_BackgroundGroup.CanSlideLeft())
