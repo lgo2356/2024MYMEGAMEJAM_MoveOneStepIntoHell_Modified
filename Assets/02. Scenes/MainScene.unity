@@ -1187,6 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fd6171a2f2ef8641bb826ca4b5466da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_UIRoot: {fileID: 1995092261}
   bgmClip: {fileID: 8300000, guid: 63be69fd7499e544f8014d41f84fab7a, type: 3}
   upSound: {fileID: 8300000, guid: 0142457442d22e2439f094d047f932ba, type: 3}
   downSound: {fileID: 8300000, guid: 0142457442d22e2439f094d047f932ba, type: 3}
@@ -1640,7 +1641,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

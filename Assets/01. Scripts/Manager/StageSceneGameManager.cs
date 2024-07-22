@@ -19,6 +19,11 @@ namespace TeamJustFour.MoveOneStep.Manager
         private float developmentBgmVolume = 0.1f; // 개발 중에만 사용할 BGM 볼륨 (0.0f ~ 1.0f)
         private float clickSoundVolume = 0.1f; // 마우스 클릭 사운드 볼륨
 
+        public void ReleaseReferences()
+        {
+            m_UIRoot.ReleaseReferences();
+        }
+
         private void OnStartButtonClick()
         {
             // BGM 중단
@@ -61,13 +66,6 @@ namespace TeamJustFour.MoveOneStep.Manager
             Debug.Log("StageSceneGameManager is enabled.");
 
             m_UIRoot.ShowGuidePopup();
-        }
-
-        private void OnDisable()
-        {
-            Debug.Log("StageSceneGameManager is disabled.");
-
-            m_UIRoot.HideGuidePopup();
         }
 
         private void Update()

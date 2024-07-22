@@ -7,6 +7,11 @@ namespace TeamJustFour.MoveOneStep.UI
     {
         [SerializeField] private UI_MainSceneButtonGroup m_ButtonGroup;
 
+        public void ReleaseReferences()
+        {
+            KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyInput);
+        }
+
         private void OnKeyInput(KeyCode keyCode)
         {
             switch (keyCode)
@@ -35,13 +40,5 @@ namespace TeamJustFour.MoveOneStep.UI
         {
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyInput);
         }
-
-        //private void OnDestroy()
-        //{
-        //    if (Application.isPlaying)
-        //    {
-        //        KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyInput);
-        //    }
-        //}
     }
 }

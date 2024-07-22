@@ -57,9 +57,16 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public void OnStartButtonClick()
         {
+            StageSceneGameManager.Instance.ReleaseReferences();
+
             PlayerPrefs.SetInt("Stage", CurrentStage);
 
             InGameSceneLoader.Instance.Load();
+        }
+
+        public void ReleaseReferences()
+        {
+            KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyboardInput);
         }
 
         private void InitUI()
@@ -111,12 +118,6 @@ namespace TeamJustFour.MoveOneStep.UI
             m_BackgroundGroup.SetOnCompleteSlideListener(OnCompleteBackgroundSlide);
 
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyboardInput);
-        }
-
-        private void OnDestroy()
-        {
-            KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyboardInput);
-            Destroy(StageSceneGameManager.Instance.gameObject);
         }
     }
 }

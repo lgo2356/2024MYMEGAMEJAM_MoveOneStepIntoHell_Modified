@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using TeamJustFour.MoveOneStep.UI;
 using UnityEngine;
 
 namespace TeamJustFour.MoveOneStep.Module
 {
     public class MainSceneGameManager : Singleton<MainSceneGameManager>
     {
+        [SerializeField] private UI_MainSceneRoot m_UIRoot;
+
         public AudioClip bgmClip; // BGM으로 사용할 오디오 클립
         public AudioClip upSound; // 위쪽 화살표 키를 눌렀을 때 재생할 오디오 클립
         public AudioClip downSound; // 아래쪽 화살표 키를 눌렀을 때 재생할 오디오 클립
@@ -21,6 +22,11 @@ namespace TeamJustFour.MoveOneStep.Module
         private float downSoundVolume = 0.6f; // 아래쪽 화살표 키 입력 사운드 볼륨
         private float enterSoundVolume = 0.6f; // 엔터 키 입력 사운드 볼륨
         private float clickSoundVolume = 0.6f; // 마우스 클릭 사운드 볼륨
+
+        public void ReleaseReferences()
+        {
+            m_UIRoot.ReleaseReferences();
+        }
 
         protected override void Awake()
         {

@@ -6,6 +6,8 @@ namespace TeamJustFour.MoveOneStep.UI
     {
         public override void Excute()
         {
+            MainSceneGameManager.Instance.ReleaseReferences();
+
             StageSceneLoader.Instance.Load();
         }
     }

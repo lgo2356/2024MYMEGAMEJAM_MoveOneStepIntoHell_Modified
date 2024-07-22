@@ -27,6 +27,8 @@ namespace TeamJustFour.MoveOneStep.Module
 
             while (!asyncOperation.isDone)
             {
+                Destroy(gameObject);
+
                 yield return null;
             }
         }

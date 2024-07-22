@@ -35,6 +35,11 @@ namespace TeamJustFour.MoveOneStep.Module
             SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
         }
 
+        public void SetDontDestroyOnLoad()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+
         private static void SetupInstance()
         {
             m_Instance = (T)FindObjectOfType(typeof(T));
@@ -47,8 +52,6 @@ namespace TeamJustFour.MoveOneStep.Module
                 };
 
                 m_Instance = go.AddComponent<T>();
-
-                DontDestroyOnLoad(m_Instance);
             }
         }
 
@@ -57,8 +60,6 @@ namespace TeamJustFour.MoveOneStep.Module
             if (m_Instance == null)
             {
                 m_Instance = this as T;
-
-                DontDestroyOnLoad(m_Instance);
             }
             else
             {

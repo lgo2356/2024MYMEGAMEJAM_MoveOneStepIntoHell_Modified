@@ -1,10 +1,8 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using TeamJustFour.MoveOneStep.Controller;
 using TeamJustFour.MoveOneStep.Module;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace TeamJustFour.MoveOneStep.Game
 {
@@ -156,6 +154,13 @@ namespace TeamJustFour.MoveOneStep.Game
             }
         }
 
+        public void ReleaseReferences()
+        {
+            Debug.Log("Player release references");
+
+            KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyboardInput);
+        }
+
         private IEnumerator StunCoroutine(float duration)
         {
             yield return new WaitForSeconds(duration);
@@ -301,6 +306,11 @@ namespace TeamJustFour.MoveOneStep.Game
         {
             ChangeWeapon(WeaponType.Hammer);
             ChangeState(PlayerState.Idle);
+        }
+
+        private void OnDisable()
+        {
+            ReleaseReferences();
         }
     }
 }
