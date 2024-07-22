@@ -379,7 +379,7 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: fd45cbf41f8eb5b4597ac5aabb8ba8b4, type: 2}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: isStunHammer
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1107 &-838367186626850086

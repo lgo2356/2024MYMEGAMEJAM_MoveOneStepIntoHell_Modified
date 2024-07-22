@@ -13,8 +13,7 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Destroy(InGameSceneGameManager.Instance.gameObject);
-            MainSceneLoader.Instance.Load();
+            StageSceneLoader.Instance.Load();
         }
 
         public void OnPointerDown(PointerEventData eventData)

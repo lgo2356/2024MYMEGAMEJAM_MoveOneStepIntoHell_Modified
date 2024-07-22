@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8623107271524129475}
   - component: {fileID: -8099710746465385171}
   - component: {fileID: 351795589499770350}
+  - component: {fileID: 2014902454484035312}
   m_Layer: 5
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -211,3 +212,15 @@ MonoBehaviour:
   m_MoveSound: {fileID: 8300000, guid: 77159d44f75660a439568912b0d6d4cf, type: 3}
   m_FailedSound: {fileID: 8300000, guid: 7d66dc9176da8eb49b9efc1a00370bbd, type: 3}
   m_TrySound: {fileID: 8300000, guid: 0df12e9763e345f4cbf1b7a04ac648b6, type: 3}
+--- !u!114 &2014902454484035312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4057561321265258494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71870c2e65c3bd845a2ef352c3a16f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

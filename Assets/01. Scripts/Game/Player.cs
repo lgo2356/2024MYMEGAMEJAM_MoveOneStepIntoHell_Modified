@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using TeamJustFour.MoveOneStep.Controller;
 using TeamJustFour.MoveOneStep.Module;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace TeamJustFour.MoveOneStep.Game
@@ -18,6 +19,7 @@ namespace TeamJustFour.MoveOneStep.Game
         Idle,
         Move,
         Stun,
+        Smash,
     }
 
     public class Player : MonoBehaviour
@@ -25,6 +27,7 @@ namespace TeamJustFour.MoveOneStep.Game
         [SerializeField] private AudioClip m_MoveSound;
         [SerializeField] private AudioClip m_FailedSound;
         [SerializeField] private AudioClip m_TrySound;
+        [SerializeField] private PlayerState m_CurrentState = PlayerState.Idle;
 
         private const int PIXEL_PER_UNIT_X = 96;
         private const int PIXEL_PER_UNIT_Y = 96;
@@ -33,9 +36,22 @@ namespace TeamJustFour.MoveOneStep.Game
 
         private Vector2 m_CurrentPosition;
         private Animator m_Anim;
+        private Block m_NextBlock;
 
         public WeaponType CurrentWeaponType { get; private set; }
-        public PlayerState CurrentState { get; private set; }
+
+        public PlayerState CurrentState 
+        { 
+            get
+            {
+                return m_CurrentState;
+            }
+
+            private set
+            {
+                m_CurrentState = value;
+            }
+        }
 
         public void SetPosition(int x, int y, bool immediately = false)
         {
@@ -73,16 +89,10 @@ namespace TeamJustFour.MoveOneStep.Game
 
                 transform.DOMove(vector, 0.5f)
                     .SetEase(Ease.InSine)
-                    .OnStart(() =>
-                    {
-                        ChangeState(PlayerState.Move);
-                    })
                     .OnComplete(() =>
                     {
                         transform.position = vector;
                         m_CurrentPosition = new Vector2(x, y);
-
-                        ChangeState(PlayerState.Idle);
                     })
                     .Play();
             }
@@ -156,8 +166,6 @@ namespace TeamJustFour.MoveOneStep.Game
 
         public void ReleaseReferences()
         {
-            Debug.Log("Player release references");
-
             KeyboardInputManager.Instance.ReleaseKeyboardInputListener(OnKeyboardInput);
         }
 
@@ -189,7 +197,7 @@ namespace TeamJustFour.MoveOneStep.Game
             ChangeState(PlayerState.Idle);
         }
 
-        private IEnumerator TryDestoryBlockOrMove(int nextX, int nextY)
+        private IEnumerator TryMoveOrSmashBlock(int nextX, int nextY)
         {
             Block nextBlock = InGameSceneGameManager.Instance.GetBlock(nextX, nextY);
 
@@ -220,8 +228,9 @@ namespace TeamJustFour.MoveOneStep.Game
                                 break;
                         }
 
-                        InGameSceneGameManager.Instance.DestroyBlock(nextX, nextY);
-                        nextBlock.Destory();
+                        InGameSceneGameManager.Instance.RemoveBlockCoordinate(nextX, nextY);
+                        m_NextBlock = nextBlock;
+                        //nextBlock.Destory();
                     }
                     else
                     {
@@ -248,6 +257,31 @@ namespace TeamJustFour.MoveOneStep.Game
             yield return null;
         }
 
+        private void OnStartSmash()
+        {
+            ChangeState(PlayerState.Smash);
+        }
+
+        private void OnSmash()
+        {
+            m_NextBlock.Destory();
+        }
+
+        private void OnEndSmash()
+        {
+            ChangeState(PlayerState.Idle);
+        }
+
+        private void OnStartMove()
+        {
+            ChangeState(PlayerState.Move);
+        }
+
+        private void OnEndMove()
+        {
+            ChangeState(PlayerState.Idle);
+        }
+
         private void OnKeyboardInput(KeyCode keyCode)
         {
             if (CurrentState != PlayerState.Idle)
@@ -262,7 +296,7 @@ namespace TeamJustFour.MoveOneStep.Game
                         int nextX = (int)m_CurrentPosition.x;
                         int nextY = (int)m_CurrentPosition.y - 1;
 
-                        StartCoroutine(TryDestoryBlockOrMove(nextX, nextY));
+                        StartCoroutine(TryMoveOrSmashBlock(nextX, nextY));
                     }
                     break;
 
@@ -271,7 +305,7 @@ namespace TeamJustFour.MoveOneStep.Game
                         int nextX = (int)m_CurrentPosition.x;
                         int nextY = (int)m_CurrentPosition.y + 1;
 
-                        StartCoroutine(TryDestoryBlockOrMove(nextX, nextY));
+                        StartCoroutine(TryMoveOrSmashBlock(nextX, nextY));
                     }
                     break;
 
@@ -280,7 +314,7 @@ namespace TeamJustFour.MoveOneStep.Game
                         int nextX = (int)m_CurrentPosition.x - 1;
                         int nextY = (int)m_CurrentPosition.y;
 
-                        StartCoroutine(TryDestoryBlockOrMove(nextX, nextY));
+                        StartCoroutine(TryMoveOrSmashBlock(nextX, nextY));
                     }
                     break;
 
@@ -289,7 +323,7 @@ namespace TeamJustFour.MoveOneStep.Game
                         int nextX = (int)m_CurrentPosition.x + 1;
                         int nextY = (int)m_CurrentPosition.y;
 
-                        StartCoroutine(TryDestoryBlockOrMove(nextX, nextY));
+                        StartCoroutine(TryMoveOrSmashBlock(nextX, nextY));
                     }
                     break;
             }
@@ -300,6 +334,13 @@ namespace TeamJustFour.MoveOneStep.Game
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyboardInput);
 
             m_Anim = gameObject.GetComponent<Animator>();
+
+            PlayerAnimEvent animEvt = gameObject.GetOrAddComponent<PlayerAnimEvent>();
+            animEvt.SetStartSmashAnimEventListener(OnStartSmash);
+            animEvt.SetOnSmashAnimEventListener(OnSmash);
+            animEvt.SetEndSmashAnimEventListener(OnEndSmash);
+            animEvt.SetStartMoveAnimEventListener(OnStartMove);
+            animEvt.SetEndMoveAnimEventListener(OnEndMove);
         }
 
         private void Start()

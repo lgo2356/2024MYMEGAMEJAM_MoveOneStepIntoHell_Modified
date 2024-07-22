@@ -54,8 +54,6 @@ namespace TeamJustFour.MoveOneStep.UI
 
         private void OnKeyboardInput(KeyCode keyCode)
         {
-            Debug.Log(keyCode);
-
             switch (keyCode)
             {
                 case KeyCode.Alpha1:

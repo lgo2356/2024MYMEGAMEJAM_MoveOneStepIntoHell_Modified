@@ -46,12 +46,9 @@ namespace TeamJustFour.MoveOneStep.Module
             }
         }
 
-        public void DestroyBlock(int x, int y)
+        public void RemoveBlockCoordinate(int x, int y)
         {
-            Debug.Log($"{m_TilemapGenerator.StageBlocks[Stage][y][x]}");
-
             m_TilemapGenerator.StageBlocks[Stage][y][x] = 0;
-            m_TilemapGenerator.GetBlock(x, y).Destory();
         }
 
         public Block GetBlock(int x, int y)
