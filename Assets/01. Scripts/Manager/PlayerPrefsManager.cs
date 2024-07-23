@@ -1,34 +1,37 @@
 using UnityEngine;
 
-public class PlayerPrefsManager
+namespace TeamJustFour.MoveOneStep.Manager
 {
-    private static PlayerPrefsManager m_Instance;
-
-    public static PlayerPrefsManager Instance
+    public class PlayerPrefsManager
     {
-        get
+        private static PlayerPrefsManager m_Instance;
+
+        public static PlayerPrefsManager Instance
         {
-            if (m_Instance == null)
+            get
             {
-                m_Instance = new PlayerPrefsManager();
+                if (m_Instance == null)
+                {
+                    m_Instance = new PlayerPrefsManager();
+                }
+
+                return m_Instance;
             }
-
-            return m_Instance;
         }
-    }
 
-    public void SetStage(int stage)
-    {
-        PlayerPrefs.SetInt("Stage", stage);
-    }
+        public void SetStage(int stage)
+        {
+            PlayerPrefs.SetInt("Stage", stage);
+        }
 
-    public int GetStage()
-    {
-        int stage = PlayerPrefs.GetInt("Stage", -1);
+        public int GetStage()
+        {
+            int stage = PlayerPrefs.GetInt("Stage", -1);
 
-        if (stage == -1)
-            throw new System.Exception("Stage is not set yet.");
+            if (stage == -1)
+                throw new System.Exception("Stage is not set yet.");
 
-        return stage;
+            return stage;
+        }
     }
 }
