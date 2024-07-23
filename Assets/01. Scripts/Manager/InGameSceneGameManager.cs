@@ -14,7 +14,11 @@ namespace TeamJustFour.MoveOneStep.Module
         private TilemapGenerator m_TilemapGenerator;
         private Soul m_Soul;
 
-        public Player Player;
+        public Player Player
+        {
+            get;
+            private set;
+        }
 
         public UI_InGameSceneRoot UIRoot
         {
