@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TeamJustFour.MoveOneStep.Game;
 using TeamJustFour.MoveOneStep.UI;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace TeamJustFour.MoveOneStep.Module
         [SerializeField] private UI_InGameSceneRoot m_UIRoot;
 
         private TilemapGenerator m_TilemapGenerator;
-        private PathFinder m_PathFinder;
         private Soul m_Soul;
 
         public Player Player;
@@ -29,7 +27,7 @@ namespace TeamJustFour.MoveOneStep.Module
         {
             get
             {
-                return PlayerPrefs.GetInt("Stage", 0);
+                return PlayerPrefsManager.Instance.GetStage();
             }
         }
 
@@ -80,7 +78,6 @@ namespace TeamJustFour.MoveOneStep.Module
             base.Awake();
 
             m_TilemapGenerator = gameObject.GetComponent<TilemapGenerator>();
-            m_PathFinder = gameObject.GetComponent<PathFinder>();
         }
 
         private void Start()
@@ -88,7 +85,7 @@ namespace TeamJustFour.MoveOneStep.Module
             m_TilemapGenerator.GenerateTilemap(Stage);
 
             Vector2Int startPosition = m_TilemapGenerator.GetStartPosition(Stage);
-            List<Vector2Int> wallPositions = m_TilemapGenerator.GetWallPositions(Stage);
+            //List<Vector2Int> wallPositions = m_TilemapGenerator.GetWallPositions(Stage);
 
             Player = m_TilemapGenerator.AddPlayer(m_PlayerPrefab, new(startPosition.x, startPosition.y));
 

@@ -89,8 +89,10 @@ namespace TeamJustFour.MoveOneStep.UI
 
         private void Start()
         {
-            int stage = PlayerPrefs.GetInt("Stage", 0) + 1;
-            m_StageText.text = "Stage " + stage;
+            int stage = PlayerPrefsManager.Instance.GetStage() + 1;
+            string stageText = "Stage " + stage;
+
+            m_StageText.text = stageText;
         }
     }
 }

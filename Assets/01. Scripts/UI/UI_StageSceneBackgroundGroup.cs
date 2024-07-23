@@ -14,19 +14,19 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public void SlideLeft()
         {
+            if (m_CurrentPage == 0)
+            {
+                return;
+            }
+
+            m_CurrentPage--;
+
             float positionX = transform.position.x + 1920f;
 
             if (m_CurrentTween != null && m_CurrentTween.IsActive())
             {
                 return;
             }
-
-            if (m_CurrentPage == 0)
-            {
-                return;
-            }
-            
-            m_CurrentPage--;
 
             m_CurrentTween = DOTween.Sequence()
                 .OnStart(() =>
@@ -53,19 +53,19 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public void SlideRight()
         {
-            float positionX = transform.position.x - 1920f;
-
-            if (m_CurrentTween != null && m_CurrentTween.IsActive())
-            {
-                return;
-            }
-
             if (m_CurrentPage == 2)
             {
                 return;
             }
 
             m_CurrentPage++;
+
+            float positionX = transform.position.x - 1920f;
+
+            if (m_CurrentTween != null && m_CurrentTween.IsActive())
+            {
+                return;
+            }
 
             m_CurrentTween = DOTween.Sequence()
                 .OnStart(() =>

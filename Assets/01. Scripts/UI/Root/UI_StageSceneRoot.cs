@@ -59,7 +59,7 @@ namespace TeamJustFour.MoveOneStep.UI
         {
             StageSceneGameManager.Instance.ReleaseReferences();
 
-            PlayerPrefs.SetInt("Stage", CurrentStage);
+            PlayerPrefsManager.Instance.SetStage(CurrentStage);
 
             InGameSceneLoader.Instance.Load();
         }
