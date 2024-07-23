@@ -5,21 +5,13 @@ namespace TeamJustFour.MoveOneStep.UI
 {
     public class UI_StageSceneBackground : MonoBehaviour
     {
-        [SerializeField] private Image m_Image;
+        [SerializeField] private int m_Page;
 
-        private void Awake()
+        public int Page => m_Page;
+
+        public void SetActive(bool isActive)
         {
-            if (m_Image == null)
-            {
-                if (gameObject.TryGetComponent<Image>(out var image))
-                {
-                    m_Image = image;
-                }
-                else
-                {
-                    throw new System.Exception("Image component not found in GameObject.");
-                }
-            }
+            gameObject.SetActive(isActive);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace TeamJustFour.MoveOneStep.UI
         private Action m_OnCompleteSlide;
         private Tween m_CurrentTween;
         private float m_CurrentPosition;
+        private int m_CurrentPage = 0;
 
         public void SlideLeft()
         {
@@ -20,14 +21,33 @@ namespace TeamJustFour.MoveOneStep.UI
             {
                 return;
             }
+
+            if (m_CurrentPage == 0)
+            {
+                return;
+            }
             
+            m_CurrentPage--;
+
             m_CurrentTween = DOTween.Sequence()
+                .OnStart(() =>
+                {
+                    m_Backgrounds[m_CurrentPage].SetActive(true);
+                })
                 .Append(transform.DOMoveX(positionX, 0.5f))
                 .OnComplete(() =>
                 {
                     transform.position = new(positionX, transform.position.y);
 
                     m_CurrentPosition = transform.position.x;
+
+                    for (int i = 0; i < m_Backgrounds.Length; i++)
+                    {
+                        if (i != m_CurrentPage)
+                        {
+                            m_Backgrounds[i].SetActive(false);
+                        }
+                    }
 
                     m_OnCompleteSlide?.Invoke();
                 })
@@ -43,13 +63,32 @@ namespace TeamJustFour.MoveOneStep.UI
                 return;
             }
 
+            if (m_CurrentPage == 2)
+            {
+                return;
+            }
+
+            m_CurrentPage++;
+
             m_CurrentTween = DOTween.Sequence()
+                .OnStart(() =>
+                {
+                    m_Backgrounds[m_CurrentPage].SetActive(true);
+                })
                 .Append(transform.DOMoveX(positionX, 0.5f))
                 .OnComplete(() =>
                 {
                     transform.position = new(positionX, transform.position.y);
 
                     m_CurrentPosition = transform.position.x;
+
+                    for (int i = 0; i < m_Backgrounds.Length; i++)
+                    {
+                        if (i != m_CurrentPage)
+                        {
+                            m_Backgrounds[i].SetActive(false);
+                        }
+                    }
 
                     m_OnCompleteSlide?.Invoke();
                 })
@@ -64,19 +103,20 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public bool CanSlideLeft()
         {
-            return m_CurrentPosition < 0f;
+            return m_CurrentPage > 0;
         }
 
         public bool CanSlideRight()
         {
-            int value = -(1920 * (transform.childCount - 1));
-
-            return m_CurrentPosition > value;
+            return m_CurrentPage < 2;
         }
 
         private void Awake()
         {
-            m_Backgrounds = new UI_StageSceneBackground[transform.childCount];
+            if (m_Backgrounds == null || m_Backgrounds.Length == 0)
+            {
+                m_Backgrounds = GetComponentsInChildren<UI_StageSceneBackground>();
+            }
         }
     }
 }
