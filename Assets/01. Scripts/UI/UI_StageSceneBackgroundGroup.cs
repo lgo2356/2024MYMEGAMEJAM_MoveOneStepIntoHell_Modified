@@ -10,7 +10,10 @@ namespace TeamJustFour.MoveOneStep.UI
 
         private Action m_OnCompleteSlide;
         private Tween m_CurrentTween;
+        private int m_MaxPage;
         private int m_CurrentPage = 0;
+
+        public int CurrentPage => m_CurrentPage;
 
         public void SlideLeft()
         {
@@ -53,7 +56,7 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public void SlideRight()
         {
-            if (m_CurrentPage == 2)
+            if (m_CurrentPage == m_MaxPage)
             {
                 return;
             }
@@ -103,7 +106,7 @@ namespace TeamJustFour.MoveOneStep.UI
 
         public bool CanSlideRight()
         {
-            return m_CurrentPage < 2;
+            return m_CurrentPage < m_MaxPage;
         }
 
         private void Awake()
@@ -112,6 +115,8 @@ namespace TeamJustFour.MoveOneStep.UI
             {
                 m_Backgrounds = GetComponentsInChildren<UI_StageSceneBackground>();
             }
+
+            m_MaxPage = m_Backgrounds.Length - 1;
         }
     }
 }

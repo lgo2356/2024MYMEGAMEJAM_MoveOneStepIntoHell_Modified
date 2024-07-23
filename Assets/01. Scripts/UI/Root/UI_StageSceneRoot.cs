@@ -13,8 +13,6 @@ namespace TeamJustFour.MoveOneStep.UI
         [SerializeField] private Button m_RightButton;
         [SerializeField] private Image m_GuidePopup;
 
-        public int CurrentStage = 0;
-
         public void ShowGuidePopup()
         {
             m_GuidePopup.gameObject.SetActive(true);
@@ -32,8 +30,6 @@ namespace TeamJustFour.MoveOneStep.UI
                 return;
             }
 
-            CurrentStage--;
-
             m_BackgroundGroup.SlideLeft();
 
             m_LeftButton.gameObject.SetActive(false);
@@ -47,8 +43,6 @@ namespace TeamJustFour.MoveOneStep.UI
                 return;
             }
 
-            CurrentStage++;
-
             m_BackgroundGroup.SlideRight();
 
             m_LeftButton.gameObject.SetActive(false);
@@ -59,7 +53,7 @@ namespace TeamJustFour.MoveOneStep.UI
         {
             StageSceneGameManager.Instance.ReleaseReferences();
 
-            PlayerPrefsManager.Instance.SetStage(CurrentStage);
+            PlayerPrefsManager.Instance.SetStage(m_BackgroundGroup.CurrentPage);
 
             InGameSceneLoader.Instance.Load();
         }
