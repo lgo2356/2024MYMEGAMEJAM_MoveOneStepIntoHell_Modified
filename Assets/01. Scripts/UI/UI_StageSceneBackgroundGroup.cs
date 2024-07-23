@@ -10,7 +10,6 @@ namespace TeamJustFour.MoveOneStep.UI
 
         private Action m_OnCompleteSlide;
         private Tween m_CurrentTween;
-        private float m_CurrentPosition;
         private int m_CurrentPage = 0;
 
         public void SlideLeft()
@@ -32,20 +31,18 @@ namespace TeamJustFour.MoveOneStep.UI
             m_CurrentTween = DOTween.Sequence()
                 .OnStart(() =>
                 {
-                    m_Backgrounds[m_CurrentPage].SetActive(true);
+                    m_Backgrounds[m_CurrentPage].gameObject.SetActive(true);
                 })
                 .Append(transform.DOMoveX(positionX, 0.5f))
                 .OnComplete(() =>
                 {
                     transform.position = new(positionX, transform.position.y);
 
-                    m_CurrentPosition = transform.position.x;
-
                     for (int i = 0; i < m_Backgrounds.Length; i++)
                     {
                         if (i != m_CurrentPage)
                         {
-                            m_Backgrounds[i].SetActive(false);
+                            m_Backgrounds[i].gameObject.SetActive(false);
                         }
                     }
 
@@ -73,20 +70,18 @@ namespace TeamJustFour.MoveOneStep.UI
             m_CurrentTween = DOTween.Sequence()
                 .OnStart(() =>
                 {
-                    m_Backgrounds[m_CurrentPage].SetActive(true);
+                    m_Backgrounds[m_CurrentPage].gameObject.SetActive(true);
                 })
                 .Append(transform.DOMoveX(positionX, 0.5f))
                 .OnComplete(() =>
                 {
                     transform.position = new(positionX, transform.position.y);
 
-                    m_CurrentPosition = transform.position.x;
-
                     for (int i = 0; i < m_Backgrounds.Length; i++)
                     {
                         if (i != m_CurrentPage)
                         {
-                            m_Backgrounds[i].SetActive(false);
+                            m_Backgrounds[i].gameObject.SetActive(false);
                         }
                     }
 

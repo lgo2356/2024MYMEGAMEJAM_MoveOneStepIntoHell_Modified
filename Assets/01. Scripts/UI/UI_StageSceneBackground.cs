@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TeamJustFour.MoveOneStep.UI
 {
@@ -8,10 +7,5 @@ namespace TeamJustFour.MoveOneStep.UI
         [SerializeField] private int m_Page;
 
         public int Page => m_Page;
-
-        public void SetActive(bool isActive)
-        {
-            gameObject.SetActive(isActive);
-        }
     }
 }
