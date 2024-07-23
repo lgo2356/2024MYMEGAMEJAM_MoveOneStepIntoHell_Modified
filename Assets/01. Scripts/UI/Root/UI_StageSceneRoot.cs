@@ -8,6 +8,7 @@ namespace TeamJustFour.MoveOneStep.UI
 {
     public class UI_StageSceneRoot : MonoBehaviour
     {
+        [SerializeField] private RectTransform m_Canvas;
         [SerializeField] private UI_StageSceneBackgroundGroup m_BackgroundGroup;
         [SerializeField] private Button m_LeftButton;
         [SerializeField] private Button m_RightButton;
@@ -69,6 +70,19 @@ namespace TeamJustFour.MoveOneStep.UI
             m_RightButton.gameObject.SetActive(m_BackgroundGroup.CanSlideRight());
         }
 
+        private void SetCanvas()
+        {
+            float width = ScreenManager.Instance.ScreenWidth;
+            float height = ScreenManager.Instance.ScreenHeight;
+
+            if (width * 9 > height * 16)
+            {
+                width = height * 16 / 9;
+            }
+
+            m_Canvas.sizeDelta = new Vector2(width, height);
+        }
+
         private void OnCompleteBackgroundSlide()
         {
             m_LeftButton.gameObject.SetActive(m_BackgroundGroup.CanSlideLeft());
@@ -112,6 +126,11 @@ namespace TeamJustFour.MoveOneStep.UI
             m_BackgroundGroup.SetOnCompleteSlideListener(OnCompleteBackgroundSlide);
 
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyboardInput);
+        }
+
+        private void Start()
+        {
+            SetCanvas();
         }
     }
 }

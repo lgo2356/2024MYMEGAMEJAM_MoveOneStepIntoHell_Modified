@@ -22,15 +22,15 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -1510825730, guid: 7f500658c518758489c282b925bae847, type: 3}
-    - time: 0.33333334
+    - time: 0.16666667
       value: {fileID: -1082840015, guid: 7f500658c518758489c282b925bae847, type: 3}
-    - time: 0.6666667
+    - time: 0.33333334
       value: {fileID: 222185956, guid: 7f500658c518758489c282b925bae847, type: 3}
-    - time: 0.8
+    - time: 0.4
       value: {fileID: 1839458612, guid: 7f500658c518758489c282b925bae847, type: 3}
-    - time: 0.96666664
+    - time: 0.48333332
       value: {fileID: 693345374, guid: 7f500658c518758489c282b925bae847, type: 3}
-    - time: 1.1333333
+    - time: 0.56666666
       value: {fileID: 1119735085, guid: 7f500658c518758489c282b925bae847, type: 3}
     attribute: m_Sprite
     path: 
@@ -65,7 +65,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.15
+    m_StopTime: 0.5833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -92,14 +92,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6666667
+  - time: 0.33333334
     functionName: OnSmash
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.1333333
+  - time: 0.56666666
     functionName: EndSmash
     data: 
     objectReferenceParameter: {fileID: 0}

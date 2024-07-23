@@ -1,8 +1,8 @@
 using DG.Tweening;
 using System.Collections;
 using TeamJustFour.MoveOneStep.Controller;
+using TeamJustFour.MoveOneStep.Manager;
 using TeamJustFour.MoveOneStep.Module;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace TeamJustFour.MoveOneStep.Game
@@ -29,8 +29,6 @@ namespace TeamJustFour.MoveOneStep.Game
         [SerializeField] private AudioClip m_TrySound;
         [SerializeField] private PlayerState m_CurrentState = PlayerState.Idle;
 
-        private const int PIXEL_PER_UNIT_X = 96;
-        private const int PIXEL_PER_UNIT_Y = 96;
         private const int WIDTH = 14;
         private const int HEIGHT = 8;
 
@@ -55,9 +53,15 @@ namespace TeamJustFour.MoveOneStep.Game
 
         public void SetPosition(int x, int y, bool immediately = false)
         {
-            int xPos = 960 - WIDTH * PIXEL_PER_UNIT_X / 2;
-            int yPos = 540 - HEIGHT * PIXEL_PER_UNIT_Y / 2;
-            Vector3 vector = new(x * PIXEL_PER_UNIT_X + xPos, (HEIGHT - y - 1) * PIXEL_PER_UNIT_Y + yPos);
+            int screenWidth = ScreenManager.Instance.GetCurrentResolution().width / 2;
+            int screenHeight = ScreenManager.Instance.GetCurrentResolution().height / 2;
+
+            int pixelPerUnitX = ScreenManager.Instance.PIXEL_PER_UNIT_X;
+            int pixelPerUnitY = ScreenManager.Instance.PIXEL_PER_UNIT_Y;
+
+            int xPos = screenWidth - WIDTH * pixelPerUnitX / 2;
+            int yPos = screenHeight - HEIGHT * pixelPerUnitY / 2;
+            Vector3 vector = new(x * pixelPerUnitX + xPos, (HEIGHT - y - 1) * pixelPerUnitY + yPos);
 
             if (immediately)
             {
@@ -87,7 +91,7 @@ namespace TeamJustFour.MoveOneStep.Game
                         break;
                 }
 
-                transform.DOMove(vector, 0.5f)
+                transform.DOMove(vector, 0.2f)
                     .SetEase(Ease.InSine)
                     .OnComplete(() =>
                     {
@@ -230,7 +234,6 @@ namespace TeamJustFour.MoveOneStep.Game
 
                         InGameSceneGameManager.Instance.RemoveBlockCoordinate(nextX, nextY);
                         m_NextBlock = nextBlock;
-                        //nextBlock.Destory();
                     }
                     else
                     {
@@ -282,12 +285,37 @@ namespace TeamJustFour.MoveOneStep.Game
             ChangeState(PlayerState.Idle);
         }
 
+        private float m_KeyboardInputTimer = 0f;
+
+        private IEnumerator KeyboardInputTimerCoroutine(float timer)
+        {
+            while (true)
+            {
+                m_KeyboardInputTimer += Time.deltaTime;
+
+                if (m_KeyboardInputTimer >= timer)
+                {
+                    m_KeyboardInputTimer = 0f;
+                    break;
+                }
+
+                yield return null;
+            }
+        }
+
         private void OnKeyboardInput(KeyCode keyCode)
         {
             if (CurrentState != PlayerState.Idle)
             {
                 return;
             }
+
+            if (m_KeyboardInputTimer != 0f)
+            {
+                return;
+            }
+
+            StartCoroutine(KeyboardInputTimerCoroutine(0.2f));
 
             switch (keyCode)
             {
@@ -335,7 +363,7 @@ namespace TeamJustFour.MoveOneStep.Game
 
             m_Anim = gameObject.GetComponent<Animator>();
 
-            PlayerAnimEvent animEvt = gameObject.GetOrAddComponent<PlayerAnimEvent>();
+            PlayerAnimEvent animEvt = gameObject.GetComponent<PlayerAnimEvent>();
             animEvt.SetStartSmashAnimEventListener(OnStartSmash);
             animEvt.SetOnSmashAnimEventListener(OnSmash);
             animEvt.SetEndSmashAnimEventListener(OnEndSmash);

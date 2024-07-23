@@ -35,7 +35,7 @@ namespace TeamJustFour.MoveOneStep.Module
             RemoveDontDestroyOnLoad();
         }
 
-        void Start()
+        private void Start()
         {
             // MainCamera에서 AudioSource 컴포넌트를 찾아 가져옴
             bgmSource = Camera.main.GetComponent<AudioSource>();

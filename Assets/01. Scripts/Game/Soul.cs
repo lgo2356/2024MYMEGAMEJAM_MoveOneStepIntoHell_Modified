@@ -1,4 +1,5 @@
 using System.Collections;
+using TeamJustFour.MoveOneStep.Manager;
 using TeamJustFour.MoveOneStep.Module;
 using UnityEngine;
 
@@ -6,8 +7,6 @@ namespace TeamJustFour.MoveOneStep.Game
 {
     public class Soul : MonoBehaviour
     {
-        private const int PIXEL_PER_UNIT_X = 96;
-        private const int PIXEL_PER_UNIT_Y = 96;
         private const int WIDTH = 14;
         private const int HEIGHT = 8;
 
@@ -48,9 +47,20 @@ namespace TeamJustFour.MoveOneStep.Game
 
         public void SetPosition(int x, int y, bool immediately = false)
         {
-            int xPos = 960 - WIDTH * PIXEL_PER_UNIT_X / 2;
-            int yPos = 540 - HEIGHT * PIXEL_PER_UNIT_Y / 2;
-            Vector3 vector = new(x * PIXEL_PER_UNIT_X + xPos, (HEIGHT - y - 1) * PIXEL_PER_UNIT_Y + yPos);
+            int screenWidth = ScreenManager.Instance.GetCurrentResolution().width / 2;
+            int screenHeight = ScreenManager.Instance.GetCurrentResolution().height / 2;
+
+            //if (screenWidth * 9 > screenHeight * 16)
+            //{
+            //    screenWidth = screenHeight * 16 / 9;
+            //}
+
+            int pixelPerUnitX = ScreenManager.Instance.PIXEL_PER_UNIT_X;
+            int pixelPerUnitY = ScreenManager.Instance.PIXEL_PER_UNIT_Y;
+
+            int xPos = screenWidth - WIDTH * pixelPerUnitX / 2;
+            int yPos = screenHeight - HEIGHT * pixelPerUnitY / 2;
+            Vector3 vector = new(x * pixelPerUnitX + xPos, (HEIGHT - y - 1) * pixelPerUnitY + yPos);
 
             transform.position = vector;
 

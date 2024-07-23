@@ -1,3 +1,4 @@
+using TeamJustFour.MoveOneStep.Manager;
 using UnityEngine;
 
 namespace TeamJustFour.MoveOneStep.UI
@@ -7,6 +8,9 @@ namespace TeamJustFour.MoveOneStep.UI
         public override void Excute()
         {
             Debug.Log("Excute Setting Button!");
+
+            //ScreenManager.Instance.SetResolution(1280, 720);
+            //ScreenManager.Instance.SetWindowed();
         }
     }
 }

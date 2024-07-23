@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TeamJustFour.MoveOneStep.Manager;
 using UnityEngine;
 
 namespace TeamJustFour.MoveOneStep.Game
@@ -21,6 +22,8 @@ namespace TeamJustFour.MoveOneStep.Game
         [SerializeField] private Transform m_Parent;
         [SerializeField] private Transform m_Parent2;
 
+        //private const int PIXEL_PER_UNIT_X = 96;
+        //private const int PIXEL_PER_UNIT_Y = 96;
         private const int PIXEL_PER_UNIT_X = 96;
         private const int PIXEL_PER_UNIT_Y = 96;
         private const int WIDTH = 14;
@@ -163,6 +166,9 @@ namespace TeamJustFour.MoveOneStep.Game
         {
             GameObject tileMapParent = new("Tilemap");
             tileMapParent.transform.SetParent(m_Parent);
+
+            RectTransform tileMapParentRect = tileMapParent.AddComponent<RectTransform>();
+            tileMapParentRect.sizeDelta = new(1344, 768);
 
             int[][] stageBlocks = StageBlocks[stage];
 
@@ -349,8 +355,19 @@ namespace TeamJustFour.MoveOneStep.Game
 
         private Vector2 GetPosition()
         {
-            int xPos = 960 - WIDTH * PIXEL_PER_UNIT_X / 2;
-            int yPos = 540 - HEIGHT * PIXEL_PER_UNIT_Y / 2;
+            int screenWidth = ScreenManager.Instance.GetCurrentResolution().width / 2;
+            int screenHeight = ScreenManager.Instance.GetCurrentResolution().height / 2;
+
+            //if (screenWidth * 9 > screenHeight * 16)
+            //{
+            //    screenWidth = screenHeight * 16 / 9;
+            //}
+
+            int xPos = screenWidth - WIDTH * PIXEL_PER_UNIT_X / 2;
+            int yPos = screenHeight - HEIGHT * PIXEL_PER_UNIT_Y / 2;
+
+            //int xPos = 960 - WIDTH * PIXEL_PER_UNIT_X / 2;
+            //int yPos = 540 - HEIGHT * PIXEL_PER_UNIT_Y / 2;
 
             return new(xPos, yPos);
         }
