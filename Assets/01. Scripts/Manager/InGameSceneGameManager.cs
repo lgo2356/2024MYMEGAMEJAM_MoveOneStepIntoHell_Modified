@@ -1,4 +1,5 @@
 using TeamJustFour.MoveOneStep.Game;
+using TeamJustFour.MoveOneStep.Manager;
 using TeamJustFour.MoveOneStep.UI;
 using UnityEngine;
 
