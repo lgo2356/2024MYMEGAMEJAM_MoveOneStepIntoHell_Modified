@@ -57,11 +57,5 @@ namespace TeamJustFour.MoveOneStep.UI
 
             SetCanvas();
         }
-
-        //private void Start()
-        //{
-        //    InitScreen();
-        //    SetCanvas();
-        //}
     }
 }

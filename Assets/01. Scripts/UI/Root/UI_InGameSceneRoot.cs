@@ -7,6 +7,7 @@ namespace TeamJustFour.MoveOneStep.UI
 {
     public class UI_InGameSceneRoot : MonoBehaviour
     {
+        [SerializeField] private RectTransform m_Canvas;
         [SerializeField] private UI_ClearPopup m_ClearPopup;
         [SerializeField] private UI_FailedPopup m_FailedPopup;
         [SerializeField] private TextMeshProUGUI m_StageText;
@@ -53,6 +54,21 @@ namespace TeamJustFour.MoveOneStep.UI
             m_FailedPopup.gameObject.SetActive(false);
         }
 
+        private void SetCanvas()
+        {
+            float width = m_Canvas.rect.width;
+            float height = m_Canvas.rect.height;
+
+            if (width * 9 > height * 16)
+            {
+                width = height * 16 / 9;
+            }
+
+            m_Canvas.anchorMin = new Vector2(0.5f, 0.5f);
+            m_Canvas.anchorMax = new Vector2(0.5f, 0.5f);
+            m_Canvas.sizeDelta = new Vector2(width, height);
+        }
+
         private void OnKeyboardInput(KeyCode keyCode)
         {
             switch (keyCode)
@@ -86,6 +102,8 @@ namespace TeamJustFour.MoveOneStep.UI
         private void Awake()
         {
             KeyboardInputManager.Instance.SetOnKeyboardInputListener(OnKeyboardInput);
+
+            SetCanvas();
         }
 
         private void Start()
