@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TeamJustFour.MoveOneStep.Manager;
 using UnityEngine;
